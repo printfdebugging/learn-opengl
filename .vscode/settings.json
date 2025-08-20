@@ -5,6 +5,23 @@
         "default": {
             "nodes": {
                 "keyboard.dispatch": "keyCode",
+                "vim.easymotion": true,
+                "vim.incsearch": true,
+                "vim.useSystemClipboard": true,
+                "vim.useCtrlKeys": true,
+                "vim.hlsearch": true,
+                "vim.leader": "<space>",
+                "vim.normalModeKeyBindings": [
+                    {
+                        "before": [
+                            "leader",
+                            "w"
+                        ],
+                        "commands": [
+                            "workbench.action.files.save",
+                        ]
+                    }
+                ],
                 "editor.formatOnSave": true,
                 "editor.renderLineHighlight": "none",
                 "editor.fontFamily": "JetBrains Mono",
