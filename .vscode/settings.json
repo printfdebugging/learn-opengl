@@ -4,6 +4,7 @@
     "platformSettings.platforms": {
         "default": {
             "nodes": {
+                "keyboard.dispatch": "keyCode",
                 "editor.formatOnSave": true,
                 "editor.renderLineHighlight": "none",
                 "editor.fontFamily": "JetBrains Mono",
