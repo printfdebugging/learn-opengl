@@ -21,6 +21,7 @@
         "christian-kohler.path-intellisense",
         "golang.go",
         "premparihar.gotestexplorer",
-        "runarsf.platform-settings"
+        "runarsf.platform-settings",
+        "vscodevim.vim"
     ]
 }
