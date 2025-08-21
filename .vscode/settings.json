@@ -23,6 +23,7 @@
                     }
                 ],
                 "editor.formatOnSave": true,
+                "editor.cursorBlinking": "solid",
                 "editor.renderLineHighlight": "none",
                 "editor.fontFamily": "JetBrains Mono",
                 "editor.fontLigatures": true,
