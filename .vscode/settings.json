@@ -51,7 +51,7 @@
                 },
                 "workbench.iconTheme": "vscode-great-icons",
                 "workbench.tree.indent": 16,
-                "workbench.colorTheme": "Catppuccin Macchiato",
+                "workbench.colorTheme": "One Dark Pro",
                 "workbench.editor.wrapTabs": true,
                 "workbench.editor.highlightModifiedTabs": true,
                 "workbench.startupEditor": "none",
