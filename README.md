@@ -21,6 +21,11 @@
   `C:\msys64\usr\bin` to the windows `PATH` variable. this shouldn't be an issue if you are not mixing 
   compiler toolchains, i am using everything clang64.
 
+### where to place git and ssh configs
+
+- if you are using msys2's git then you should place it in `C:\msys64\home\username\{.ssh,.gitconfig}`, if
+  you are using `git for windows`, the configs should be placed in `C:\Users\username\{.ssh,.gitconfig}`.
+
 ### clangd issues
 
 - the clangd vscode extension asks you to download clangd when it doesn't find it in the path, please don't 
