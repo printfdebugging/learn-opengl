@@ -62,7 +62,7 @@
                 "debug.openExplorerOnEnd": true,
                 "terminal.integrated.cwd": "${workspaceFolder}",
                 "chat.commandCenter.enabled": false,
-                "git.enableCommitSigning": true,
+                "git.enableCommitSigning": false,
                 "git.autofetch": true,
                 "git.confirmSync": false,
                 "git.detectSubmodules": true,
@@ -200,7 +200,7 @@
                     }
                 },
                 "terminal.integrated.defaultProfile.windows": "bash (MSYS2)",
-                "clangd.path": "c:\\Users\\printfdebugging\\AppData\\Roaming\\Code\\User\\globalStorage\\llvm-vs-code-extensions.vscode-clangd\\install\\20.1.8\\clangd_20.1.8\\bin\\clangd.exe",
+                "clangd.path": "c:\\msys64\\clang64\\bin\\clangd.exe",
             },
             "remove": [
                 "platformSettings.placebo"
