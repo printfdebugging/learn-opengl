@@ -12,7 +12,22 @@ ADD_EXECUTABLE(
     src/main.c
 )
 
-TARGET_COMPILE_OPTIONS(learngl PRIVATE -std=c11 -g -Wall -Wextra -static)
-TARGET_LINK_LIBRARIES(learngl PRIVATE glad glfw)
-TARGET_INCLUDE_DIRECTORIES(learngl PRIVATE include)
-TARGET_COMPILE_DEFINITIONS(learngl PRIVATE GLFW_INCLUDE_NONE)
+TARGET_COMPILE_OPTIONS(learngl PRIVATE
+    -std=c11
+    -g
+    -Wall
+    -Wextra
+    -static
+)
+
+TARGET_LINK_LIBRARIES(learngl PRIVATE
+    glad
+    glfw
+)
+
+TARGET_INCLUDE_DIRECTORIES(learngl PRIVATE
+    include
+)
+TARGET_COMPILE_DEFINITIONS(learngl PRIVATE
+    GLFW_INCLUDE_NONE
+)
