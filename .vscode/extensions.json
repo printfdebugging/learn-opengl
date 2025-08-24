@@ -22,6 +22,7 @@
         "golang.go",
         "premparihar.gotestexplorer",
         "runarsf.platform-settings",
-        "vscodevim.vim"
+        "vscodevim.vim",
+        "pomdtr.excalidraw-editor"
     ]
 }

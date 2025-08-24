@@ -129,6 +129,7 @@
                 "cmake.showConfigureWithDebuggerNotification": false,
                 "lldb.suppressUpdateNotifications": true,
                 "docker.extension.enableComposeLanguageServer": false,
+                "excalidraw.theme": "auto",
             }
         },
         "win32": {
