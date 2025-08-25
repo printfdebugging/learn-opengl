@@ -1,0 +1,7 @@
+{
+    // Debug builds needs to be executed in the workspace root for assets to be found.
+    "terminal.integrated.cwd": "${workspaceFolder}",
+    "cmake.debugConfig": {
+        "cwd": "${workspaceFolder}",
+    }
+}
