@@ -1,0 +1,6 @@
+{
+    // Debug builds needs to be executed in the workspace root for assets to be found.
+    "cmake.debugConfig": {
+        "cwd": "${workspaceFolder}",
+    }
+}
