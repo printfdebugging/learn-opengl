@@ -3,6 +3,6 @@
 
 #include <stddef.h>
 
-const char* read_shader_file(const char* filename);
+const char *read_shader_file(const char *filename);
 
 #endif
