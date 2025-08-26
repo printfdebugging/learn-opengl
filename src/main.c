@@ -76,7 +76,7 @@ int main() {
 
     // This could change later but for the time being, we always use the same color, the same shader and the same model.
     // Pulled outside of the main loop.
-    glClearColor(0.2f, 0.3f, 0.3f, 0.1f);
+    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     glUseProgram(shader_program);
     glBindVertexArray(VAO);
 
