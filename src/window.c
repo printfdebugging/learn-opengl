@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "window.h"
+#include "logger.h"
 
 static void framebuffer_resize_callback(GLFWwindow* window, int width, int height) {
     (void) window;
@@ -8,7 +9,7 @@ static void framebuffer_resize_callback(GLFWwindow* window, int width, int heigh
 
 GLFWwindow* window_create(GLuint width, GLuint height, const GLchar* title) {
     if (!glfwInit()) {
-        fprintf(stderr, "failed to initialize glfw\n");
+        ERROR("failed to initialize glfw\n");
         return NULL;
     }
 
@@ -22,14 +23,14 @@ GLFWwindow* window_create(GLuint width, GLuint height, const GLchar* title) {
 
     GLFWwindow* window = glfwCreateWindow(width, height, title, NULL, NULL);
     if (!window) {
-        fprintf(stderr, "failed to create glfw winodw\n");
+        ERROR("failed to create glfw winodw\n");
         glfwTerminate();
         return NULL;
     }
 
     glfwMakeContextCurrent(window);
     if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress)) {
-        fprintf(stderr, "failed to initialize glad\n");
+        ERROR("failed to initialize glad\n");
         glfwTerminate();
         return NULL;
     }

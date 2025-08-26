@@ -1,5 +1,6 @@
 #define _GNU_SOURCE
 #include "shader.h"
+#include "logger.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -7,7 +8,7 @@
 static const char *read_shader_file(const char *filename) {
     FILE *file = fopen(filename, "rb");
     if (!file) {
-        fprintf(stderr, "failed to read shader file: %s\n", filename);
+        ERROR("failed to read shader file: %s\n", filename);
         return NULL;
     }
 
@@ -17,14 +18,14 @@ static const char *read_shader_file(const char *filename) {
 
     if (length < 0) {
         fclose(file);
-        fprintf(stderr, "failed to get the shader file's length: %s\n", filename);
+        ERROR("failed to get the shader file's length: %s\n", filename);
         return NULL;
     }
 
     char *buffer = malloc(length + 1);
     if (!buffer) {
         fclose(file);
-        fprintf(stderr, "failed to allocate memory for shader file: %s\n", filename);
+        ERROR("failed to allocate memory for shader file: %s\n", filename);
         return NULL;
     }
 
@@ -38,7 +39,7 @@ static const char *read_shader_file(const char *filename) {
 GLuint shader_load_from_file(const char *filename, GLenum shader_type) {
     const char *shader_source = read_shader_file(filename);
     if (!shader_source) {
-        fprintf(stderr, "failed to load vertex shader source\n");
+        ERROR("failed to load vertex shader source\n");
         return 0;
     }
 
@@ -51,7 +52,7 @@ GLuint shader_load_from_file(const char *filename, GLenum shader_type) {
     glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
     if (!success) {
         glGetShaderInfoLog(shader, 512, NULL, info_log);  // FIXME: Obtain the length of the log dynamically.
-        fprintf(stderr, "failed to comile shader file (%s): %s\n", filename, info_log);
+        ERROR("failed to comile shader file (%s): %s\n", filename, info_log);
         free((void *) shader_source);
         return 0;
     }

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "shader.h"
 #include "window.h"
+#include "logger.h"
 
 const int WINDOW_WIDTH = 800;
 const int WINDOW_HEIGHT = 600;
@@ -68,7 +69,7 @@ int main() {
     if (!success) {
         char inf_log[512];
         glGetProgramInfoLog(shader_program, 512, NULL, inf_log);  // FIXME: Obtain the length of the log dynamically.
-        fprintf(stderr, "failed to link shader program: %s\n", inf_log);
+        ERROR("failed to link shader program: %s\n", inf_log);
     }
 
     glDeleteShader(vertex_shader);
