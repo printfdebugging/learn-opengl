@@ -11,6 +11,7 @@ ADD_EXECUTABLE(
     learngl
     src/main.c
     src/shader.c
+    src/window.c
 )
 
 TARGET_COMPILE_OPTIONS(learngl PRIVATE

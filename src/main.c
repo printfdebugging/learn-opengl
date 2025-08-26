@@ -1,9 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-
-#include "GLFW/glfw3.h"
-#include "glad/gald.h"
 #include "shader.h"
+#include "window.h"
 
 const int WINDOW_WIDTH = 800;
 const int WINDOW_HEIGHT = 600;
@@ -21,11 +19,6 @@ GLfloat vertices[] = {
     0.0f,
 };
 
-static void framebuffer_resize_callback(GLFWwindow *window, int width, int height) {
-    (void) window;
-    glViewport(0, 0, width, height);
-}
-
 static void process_input(GLFWwindow *window) {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE)) {
         glfwSetWindowShouldClose(window, GLFW_TRUE);
@@ -33,30 +26,10 @@ static void process_input(GLFWwindow *window) {
 }
 
 int main() {
-    if (!glfwInit()) {
-        fprintf(stderr, "failed to initialize glfw\n");
-        return EXIT_FAILURE;
-    }
-
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);  // For MacOS.
-
-    GLFWwindow *window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE, NULL, NULL);
+    GLFWwindow *window = window_create(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE);
     if (!window) {
-        fprintf(stderr, "failed to create glfw winodw\n");
-        glfwTerminate();
         return EXIT_FAILURE;
     }
-
-    glfwMakeContextCurrent(window);
-    if (!gladLoadGL()) {
-        fprintf(stderr, "failed to initialize glad\n");
-        return EXIT_FAILURE;
-    }
-
-    glfwSetFramebufferSizeCallback(window, framebuffer_resize_callback);
 
     GLuint VAO;
     glGenVertexArrays(1, &VAO);
@@ -124,8 +97,7 @@ int main() {
     glDeleteBuffers(1, &VBO);
     glDeleteVertexArrays(1, &VAO);
     glDeleteProgram(shader_program);
-
-    glfwTerminate();
+    window_destroy(window);
 
     return EXIT_SUCCESS;
 }
