@@ -1,4 +1,16 @@
-# Development
+# Conventions
+
+### the caller never prints an error
+
+- each function specifies what's considered a valid return value and what should be considered
+  an error. this should be specified in the header file using a comment above the function
+  declaration.
+
+- the error message is printed at the spot where the error occured and then an appropriate
+  value is returned. the caller then checks that value and based on it decides whether to return/exit
+  or continue further.
+
+# Development Environment
 
 ### msys2 setup
 
