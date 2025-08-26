@@ -1,8 +1,11 @@
 #ifndef SHADER_H
 #define SHADER_H
 
-#include <stddef.h>
+#include "glad/glad.h"
 
-const char *read_shader_file(const char *filename);
+/*
+    returns 0 on error
+*/
+GLuint shader_load_from_file(const char *filename, GLenum shader_type);
 
 #endif

@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-const char *read_shader_file(const char *filename) {
+static const char *read_shader_file(const char *filename) {
     FILE *file = fopen(filename, "rb");
     if (!file) {
         fprintf(stderr, "failed to read shader file: %s\n", filename);
@@ -33,4 +33,27 @@ const char *read_shader_file(const char *filename) {
     fclose(file);
 
     return buffer;
+}
+
+GLuint shader_load_from_file(const char *filename, GLenum shader_type) {
+    const char *shader_source = read_shader_file(filename);
+    if (!shader_source) {
+        fprintf(stderr, "failed to load vertex shader source\n");
+        return 0;
+    }
+
+    GLuint shader = glCreateShader(shader_type);
+    glShaderSource(shader, 1, &shader_source, NULL);
+    glCompileShader(shader);
+
+    int success;
+    char info_log[512];
+    glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
+    if (!success) {
+        glGetShaderInfoLog(shader, 512, NULL, info_log);  // FIXME: Obtain the length of the log dynamically.
+        fprintf(stderr, "failed to comile shader file (%s): %s\n", filename, info_log);
+        return 0;
+    }
+
+    return shader;
 }
