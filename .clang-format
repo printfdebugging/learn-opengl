@@ -24,6 +24,7 @@ AlignArrayOfStructures: Left
 AlwaysBreakBeforeMultilineStrings: false
 AllowShortLoopsOnASingleLine: true
 SortUsingDeclarations: true
+SortIncludes: Never
 SpaceAfterCStyleCast: true
 SpaceBeforeAssignmentOperators: true
 SpaceBeforeParens: ControlStatements 
