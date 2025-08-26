@@ -52,8 +52,10 @@ GLuint shader_load_from_file(const char *filename, GLenum shader_type) {
     if (!success) {
         glGetShaderInfoLog(shader, 512, NULL, info_log);  // FIXME: Obtain the length of the log dynamically.
         fprintf(stderr, "failed to comile shader file (%s): %s\n", filename, info_log);
+        free((void *) shader_source);
         return 0;
     }
 
+    free((void *) shader_source);
     return shader;
 }
