@@ -65,9 +65,13 @@ GLuint shader_load_from_file(const char *filename, GLenum shader_type) {
     int success;
     glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
     if (!success) {
-        char info_log[512];
-        glGetShaderInfoLog(shader, 512, NULL, info_log);  // FIXME: Obtain the length of the log dynamically.
+        GLint info_log_len;
+        glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &info_log_len);
+        char info_log[info_log_len];
+        glGetShaderInfoLog(shader, info_log_len, NULL, info_log);
         ERROR("failed to compile shader file (%s): %s\n", filename, info_log);
+
+        glDeleteShader(shader);
         return 0;
     }
 
@@ -101,8 +105,10 @@ struct shader_program shader_program_create(const char *vertex_shader_source, co
     int success = 0;
     glGetProgramiv(shader_program, GL_LINK_STATUS, &success);
     if (!success) {
-        char info_log[512];
-        glGetProgramInfoLog(shader_program, 512, NULL, info_log);  // FIXME: Obtain the length of the log dynamically.
+        GLint info_log_len;
+        glGetProgramiv(shader_program, GL_INFO_LOG_LENGTH, &info_log_len);
+        char info_log[info_log_len];
+        glGetProgramInfoLog(shader_program, 512, NULL, info_log);
         ERROR("failed to link shader program: %s\n", info_log);
 
         glDeleteShader(program.vertex_shader);
