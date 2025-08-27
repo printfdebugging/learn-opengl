@@ -42,37 +42,15 @@ int main() {
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 
-    GLuint vertex_shader = shader_load_from_file("shaders/shader.vert", GL_VERTEX_SHADER);
-    if (!vertex_shader) {
+    struct shader_program program = shader_program_create("shaders/shader.vert", "shaders/shader.frag");
+    if (!program.shader_program) {
         return EXIT_FAILURE;
     }
-
-    GLuint fragment_shader = shader_load_from_file("shaders/shader.frag", GL_FRAGMENT_SHADER);
-    if (!fragment_shader) {
-        return EXIT_FAILURE;
-    }
-
-    GLuint shader_program;
-    shader_program = glCreateProgram();
-    glAttachShader(shader_program, vertex_shader);
-    glAttachShader(shader_program, fragment_shader);
-    glLinkProgram(shader_program);
-
-    int success = 0;
-    glGetProgramiv(shader_program, GL_LINK_STATUS, &success);
-    if (!success) {
-        char inf_log[512];
-        glGetProgramInfoLog(shader_program, 512, NULL, inf_log);  // FIXME: Obtain the length of the log dynamically.
-        ERROR("failed to link shader program: %s\n", inf_log);
-    }
-
-    glDeleteShader(vertex_shader);
-    glDeleteShader(fragment_shader);
 
     // This could change later but for the time being, we always use the same color, the same shader and the same model.
     // Pulled outside of the main loop.
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-    glUseProgram(shader_program);
+    glUseProgram(program.shader_program);
     glBindVertexArray(VAO);
 
     while (!glfwWindowShouldClose(window)) {
@@ -90,7 +68,7 @@ int main() {
     // Cleanup.
     glDeleteBuffers(1, &VBO);
     glDeleteVertexArrays(1, &VAO);
-    glDeleteProgram(shader_program);
+    shader_program_destroy(program);
     window_destroy(window);
 
     return EXIT_SUCCESS;
