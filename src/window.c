@@ -49,3 +49,7 @@ void window_process_input(GLFWwindow* window) {
 void window_destroy(GLFWwindow* window) {
     glfwDestroyWindow(window);
 }
+
+void window_refresh(GLFWwindow* window) {
+    glfwSwapBuffers(window);
+}

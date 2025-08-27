@@ -62,7 +62,7 @@ int main() {
         glDrawArrays(GL_TRIANGLES, 0, 3);
 
         // (3) Swap phase.
-        glfwSwapBuffers(window);
+        window_refresh(window);
     }
 
     // Cleanup.
