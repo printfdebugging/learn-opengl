@@ -20,12 +20,6 @@ GLfloat vertices[] = {
     0.0f,
 };
 
-static void process_input(GLFWwindow *window) {
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE)) {
-        glfwSetWindowShouldClose(window, GLFW_TRUE);
-    }
-}
-
 int main() {
     GLFWwindow *window = window_create(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE);
     if (!window) {
@@ -83,8 +77,7 @@ int main() {
 
     while (!glfwWindowShouldClose(window)) {
         // (1) Event phase.
-        glfwPollEvents();
-        process_input(window);
+        window_process_input(window);
 
         // (2) Render phase.
         glClear(GL_COLOR_BUFFER_BIT);

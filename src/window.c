@@ -39,6 +39,13 @@ GLFWwindow* window_create(GLuint width, GLuint height, const GLchar* title) {
     return window;
 }
 
+void window_process_input(GLFWwindow* window) {
+    glfwPollEvents();
+    if (glfwGetKey(window, GLFW_KEY_ESCAPE)) {
+        glfwSetWindowShouldClose(window, GLFW_TRUE);
+    }
+}
+
 void window_destroy(GLFWwindow* window) {
     glfwDestroyWindow(window);
 }
