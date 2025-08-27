@@ -51,6 +51,16 @@ static const char *read_shader_file(const char *filename) {
     return buffer;
 }
 
+/*
+DESCRIPTION:
+    assigns a vertex attribute index (location) to a named
+    attribute variable in a shader program, before you link
+    the program.
+*/
+static void shader_program_bind_attribute(struct shader_program program, GLuint attribute, const char *variable_name) {
+    glBindAttribLocation(program.shader_program, attribute, variable_name);
+}
+
 GLuint shader_load_from_file(const char *filename, GLenum shader_type) {
     const char *shader_source = read_shader_file(filename);
     if (!shader_source) {
@@ -126,8 +136,4 @@ void shader_program_destroy(struct shader_program program) {
     glDeleteShader(program.vertex_shader);
     glDeleteShader(program.fragment_shader);
     glDeleteProgram(program.shader_program);
-}
-
-void shader_program_bind_attribute(struct shader_program program, GLuint attribute, const char *variable_name) {
-    glBindAttribLocation(program.shader_program, attribute, variable_name);
 }

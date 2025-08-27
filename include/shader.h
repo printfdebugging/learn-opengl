@@ -35,14 +35,6 @@ void shader_program_destroy(struct shader_program program);
 
 /*
 DESCRIPTION:
-    assigns a vertex attribute index (location) to a named
-    attribute variable in a shader program, before you link
-    the program.
-*/
-void shader_program_bind_attribute(struct shader_program program, GLuint attribute, const char* variable_name);
-
-/*
-DESCRIPTION:
     1. read shader file, check for errors
     2. create a shader object  and set it's source
     3. compile the shader and check for errors
