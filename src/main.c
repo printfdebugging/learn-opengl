@@ -1,8 +1,7 @@
-#include <stdio.h>
 #include <stdlib.h>
 #include "shader.h"
 #include "window.h"
-#include "logger.h"
+#include "mesh.h"
 
 const int WINDOW_WIDTH = 800;
 const int WINDOW_HEIGHT = 600;
@@ -35,8 +34,8 @@ int main() {
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof vertices, vertices, GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), NULL);
-    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(MESH_ATTRIBUTE_POSITION, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), NULL);
+    glEnableVertexAttribArray(MESH_ATTRIBUTE_POSITION);
 
     // Reset for safety.
     glBindBuffer(GL_ARRAY_BUFFER, 0);

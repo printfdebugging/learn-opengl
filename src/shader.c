@@ -1,6 +1,7 @@
 #define _GNU_SOURCE
 #include "shader.h"
 #include "logger.h"
+#include "mesh.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -66,7 +67,7 @@ GLuint shader_load_from_file(const char *filename, GLenum shader_type) {
     if (!success) {
         char info_log[512];
         glGetShaderInfoLog(shader, 512, NULL, info_log);  // FIXME: Obtain the length of the log dynamically.
-        ERROR("failed to comile shader file (%s): %s\n", filename, info_log);
+        ERROR("failed to compile shader file (%s): %s\n", filename, info_log);
         return 0;
     }
 
@@ -94,7 +95,7 @@ struct shader_program shader_program_create(const char *vertex_shader_source, co
     shader_program = glCreateProgram();
     glAttachShader(shader_program, vertex_shader);
     glAttachShader(shader_program, fragment_shader);
-    shader_program_bind_attribute(program, 0, "vertex_position");
+    shader_program_bind_attribute(program, MESH_ATTRIBUTE_POSITION, shader_var_names[MESH_ATTRIBUTE_POSITION]);
     glLinkProgram(shader_program);
 
     int success = 0;
