@@ -1,6 +1,4 @@
 #include "mesh.h"
-#include "logger.h"
-#include "shader.h"
 #include <unistd.h>
 
 struct mesh mesh_create() {

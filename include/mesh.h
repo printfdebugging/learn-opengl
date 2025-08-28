@@ -29,14 +29,15 @@ struct mesh mesh_create();
 
 /*
 DESCRIPTION:
-    1. checks for invalid vao handle
-    2. makes the vao current
+    1. makes the vao current
+    2. uses the mesh's shader program
 */
 void mesh_bind(struct mesh* mesh);
 
 /*
 DESCRIPTION:
     1. unbinds any vao by binding 0
+    2. unbinds mesh's shader program by binding 0
 */
 void mesh_unbind();
 
