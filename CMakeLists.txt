@@ -12,6 +12,8 @@ ADD_EXECUTABLE(
     src/main.c
     src/shader.c
     src/window.c
+    src/renderer.c
+    src/mesh.c
 )
 
 TARGET_COMPILE_OPTIONS(learngl PRIVATE
