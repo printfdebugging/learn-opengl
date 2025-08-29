@@ -119,10 +119,11 @@ struct shader_program shader_program_create(const char *vertex_shader_source, co
         glGetProgramiv(shader_program, GL_INFO_LOG_LENGTH, &info_log_len);
         char info_log[info_log_len];
         glGetProgramInfoLog(shader_program, 512, NULL, info_log);
-        ERROR("failed to link shader program: %s\n", info_log);
 
         glDeleteShader(program.vertex_shader);
         glDeleteShader(program.fragment_shader);
+
+        ERROR("failed to link shader program: %s\n", info_log);
         return program;
     }
 

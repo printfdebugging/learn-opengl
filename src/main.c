@@ -27,8 +27,12 @@ int main() {
     }
 
     struct mesh mesh = mesh_create();
-    mesh_load_vertices(&mesh, vertices, sizeof(vertices), 3 * sizeof(float), GL_STATIC_DRAW);
-    mesh_load_shader_program(&mesh, "shaders/shader.vert", "shaders/shader.frag");
+    if (!mesh_load_vertices(&mesh, vertices, sizeof(vertices), 3 * sizeof(float), GL_STATIC_DRAW)) {
+        return EXIT_FAILURE;
+    }
+    if (!mesh_load_shader_program(&mesh, "shaders/shader.vert", "shaders/shader.frag")) {
+        return EXIT_FAILURE;
+    }
 
     renderer_init();
 

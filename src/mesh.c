@@ -1,4 +1,5 @@
 #include "mesh.h"
+#include "logger.h"
 #include <unistd.h>
 
 struct mesh mesh_create() {
@@ -16,9 +17,29 @@ struct mesh mesh_create() {
     return mesh;
 }
 
-void mesh_bind(struct mesh *mesh) {
+GLboolean mesh_bind_vertex_array(struct mesh *mesh) {
+    if (!mesh->vertex_array) {
+        ERROR("attempt to bind invalid mesh->vertex_array=%i\n", mesh->vertex_array);
+        return GL_FALSE;
+    }
     glBindVertexArray(mesh->vertex_array);
+    return GL_TRUE;
+}
+
+GLboolean mesh_bind_shader_program(struct mesh *mesh) {
+    if (!mesh->vertex_array || !mesh->shader_program.shader_program) {
+        ERROR("attempt to bind invalid mesh->shader_program.program=%i\n", mesh->shader_program.shader_program);
+        return GL_FALSE;
+    }
     glUseProgram(mesh->shader_program.shader_program);
+    return GL_TRUE;
+}
+
+GLboolean mesh_bind(struct mesh *mesh) {
+    if (!mesh_bind_vertex_array(mesh) || !mesh_bind_shader_program(mesh)) {
+        return GL_FALSE;
+    }
+    return GL_TRUE;
 }
 
 void mesh_unbind() {
@@ -48,15 +69,22 @@ static void __mesh_bind_vertex_data(struct mesh *mesh, const GLfloat *vertices, 
     mesh->vertex_array = vbo;
 }
 
-void mesh_load_vertices(struct mesh *mesh, const GLfloat *vertices, GLuint count, GLuint stride, GLenum draw_type) {
-    mesh_bind(mesh);
+GLboolean mesh_load_vertices(struct mesh *mesh, const GLfloat *vertices, GLuint count, GLuint stride, GLenum draw_type) {
+    if (!mesh_bind_vertex_array(mesh)) {
+        return GL_FALSE;
+    }
     __mesh_bind_vertex_data(mesh, vertices, count, stride, draw_type);
     mesh_unbind();
+    return GL_TRUE;
 }
 
-void mesh_load_shader_program(struct mesh *mesh, const char *vertex_shader_source, const char *fragment_shader_source) {
+GLboolean mesh_load_shader_program(struct mesh *mesh, const char *vertex_shader_source, const char *fragment_shader_source) {
     struct shader_program program = shader_program_create(vertex_shader_source, fragment_shader_source);
+    if (!program.shader_program) {
+        return GL_FALSE;
+    }
     mesh->shader_program = program;
+    return GL_TRUE;
 }
 
 void mesh_destroy(struct mesh mesh) {

@@ -31,8 +31,11 @@ struct mesh mesh_create();
 DESCRIPTION:
     1. makes the vao current
     2. uses the mesh's shader program
+
+ERROR:
+    returns false
 */
-void mesh_bind(struct mesh* mesh);
+GLboolean mesh_bind(struct mesh* mesh);
 
 /*
 DESCRIPTION:
@@ -46,15 +49,21 @@ DESCRIPTION:
     1. makes the vao current
     2. creates a vbo with vertices and binds it to vao
     3. unbinds the current vao
+
+ERROR:
+    returns false
 */
-void mesh_load_vertices(struct mesh *mesh, const GLfloat *vertices, GLuint count, GLuint stride, GLenum draw_type);
+GLboolean mesh_load_vertices(struct mesh* mesh, const GLfloat* vertices, GLuint count, GLuint stride, GLenum draw_type);
 
 /*
 DESCRIPTION:
     1. loads a shader program
     2. saves it in the mesh
+
+ERROR:
+    returns false
 */
-void mesh_load_shader_program(struct mesh* mesh, const char* vertex_shader_source, const char* fragment_shader_source);
+GLboolean mesh_load_shader_program(struct mesh* mesh, const char* vertex_shader_source, const char* fragment_shader_source);
 
 /*
 DESCRIPTION:
