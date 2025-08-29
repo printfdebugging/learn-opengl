@@ -8,10 +8,6 @@ enum mesh_attribute {
     MESH_ATTRIBUTE_POSITION = 0,
 };
 
-static const char* shader_var_names[] = {
-    [MESH_ATTRIBUTE_POSITION] = "vertex_position",
-};
-
 struct mesh {
     GLuint vertex_array;
     GLuint vertices_buffer;

@@ -88,6 +88,10 @@ GLuint shader_load_from_file(const char *filename, GLenum shader_type) {
     return shader;
 }
 
+static const char *shader_var_names[] = {
+    [MESH_ATTRIBUTE_POSITION] = "vertex_position",
+};
+
 struct shader_program shader_program_create(const char *vertex_shader_source, const char *fragment_shader_source) {
     struct shader_program program = {
         .shader_program = 0,
