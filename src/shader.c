@@ -3,7 +3,6 @@
 #include "logger.h"
 #include "mesh.h"
 
-#include <stdio.h>
 #include <stdlib.h>
 
 /*
