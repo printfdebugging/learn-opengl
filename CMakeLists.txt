@@ -36,3 +36,10 @@ TARGET_INCLUDE_DIRECTORIES(learngl PRIVATE
 TARGET_COMPILE_DEFINITIONS(learngl PRIVATE
     GLFW_INCLUDE_NONE
 )
+
+add_custom_target(run
+    COMMAND learngl
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+    DEPENDS learngl
+    COMMENT "Running learngl from root directory"
+)
