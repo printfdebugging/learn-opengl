@@ -10,8 +10,12 @@ enum mesh_attribute {
 
 struct mesh {
     GLuint vertex_array;
+
     GLuint vertices_buffer;
+    GLuint vertices_count;
+
     GLuint indices_buffer;
+    GLuint indices_count;
 
     struct shader_program shader_program;
 };
@@ -50,6 +54,17 @@ ERROR:
     returns false
 */
 GLboolean mesh_load_vertices(struct mesh* mesh, const GLfloat* vertices, GLuint count, GLuint stride, GLenum draw_type);
+
+/*
+DESCRIPTION:
+    1. makes the vao current
+    2. creates an ebo with vertices and binds it to vao
+    3. unbinds the current vao
+
+ERROR:
+    returns false
+*/
+GLboolean mesh_load_indices(struct mesh* mesh, const GLuint* vertices, GLuint count, GLenum draw_type);
 
 /*
 DESCRIPTION:

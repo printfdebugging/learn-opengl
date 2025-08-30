@@ -10,3 +10,12 @@
 ## opengl specification
 - https://registry.khronos.org/OpenGL/specs/gl/glspec33.core.pdf
 - it's a must read once you get comfortable with opengl
+
+## glfw and event polling
+- we can register callbacks with glfw, like the framebuffer_resize_callback
+- `glfwPollEvens()` listens for user events, updates window state and calls the registered callback functions
+
+## rendering
+- opengl  is a 3d graphics library and takes input `normalized device coordinates` i.e. in \[-1, 1\] range
+- i wonder how many decimal places of precision is supported in this coordinate space and what are the implications of having high precision floats there
+- ndc are transformed to screen-space coordinates via the viewport transform

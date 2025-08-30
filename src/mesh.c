@@ -6,7 +6,9 @@ struct mesh mesh_create() {
     struct mesh mesh = {
         .vertex_array = 0,
         .vertices_buffer = 0,
+        .vertices_count = 0,
         .indices_buffer = 0,
+        .indices_count = 0,
         .shader_program = {0},
     };
 
@@ -45,6 +47,7 @@ GLboolean mesh_bind(struct mesh *mesh) {
 void mesh_unbind() {
     glBindVertexArray(0);
     glUseProgram(0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
 /*
@@ -67,6 +70,16 @@ static void __mesh_bind_vertex_data(struct mesh *mesh, const GLfloat *vertices, 
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     mesh->vertex_array = vbo;
+    mesh->vertices_count = count;
+}
+
+static void __mesh_bind_index_data(struct mesh *mesh, const GLuint *indices, GLuint count, GLenum draw_type) {
+    GLuint ebo;
+    glGenBuffers(1, &ebo);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, count, indices, draw_type);
+    mesh->indices_buffer = ebo;
+    mesh->indices_count = count;
 }
 
 GLboolean mesh_load_vertices(struct mesh *mesh, const GLfloat *vertices, GLuint count, GLuint stride, GLenum draw_type) {
@@ -74,6 +87,15 @@ GLboolean mesh_load_vertices(struct mesh *mesh, const GLfloat *vertices, GLuint 
         return GL_FALSE;
     }
     __mesh_bind_vertex_data(mesh, vertices, count, stride, draw_type);
+    mesh_unbind();
+    return GL_TRUE;
+}
+
+GLboolean mesh_load_indices(struct mesh *mesh, const GLuint *indices, GLuint count, GLenum draw_type) {
+    if (!mesh_bind_vertex_array(mesh)) {
+        return GL_FALSE;
+    }
+    __mesh_bind_index_data(mesh, indices, count, draw_type);
     mesh_unbind();
     return GL_TRUE;
 }

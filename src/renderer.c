@@ -9,7 +9,7 @@ void renderer_prepare() {
     glClear(GL_COLOR_BUFFER_BIT);
 }
 
-void renderer_render(struct mesh mesh) {
+void renderer_render(struct mesh mesh, enum render_type render_type) {
     if (!mesh_bind(&mesh)) {
         // TODO: as renderer evolves we would want to handle this error properly
         // but for now a message is good enough, although it should not be here
@@ -18,6 +18,25 @@ void renderer_render(struct mesh mesh) {
         ERROR("failed to bind mesh successfully during render\n");
         return;
     }
-    glDrawArrays(GL_TRIANGLES, 0, 3);
+
+    switch (render_type) {
+        case VERTICES:
+            glDrawArrays(GL_TRIANGLES, 0, mesh.vertices_count);
+            break;
+        case INDICES:
+            glDrawElements(GL_TRIANGLES, mesh.indices_count, GL_UNSIGNED_INT, 0);
+            break;
+        case VERTICES_WIREFRAME:
+            glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+            renderer_render(mesh, VERTICES);
+            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+            break;
+        case INDICES_WIREFRAME:
+            glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+            renderer_render(mesh, INDICES);
+            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+            break;
+    }
+
     mesh_unbind();
 }
