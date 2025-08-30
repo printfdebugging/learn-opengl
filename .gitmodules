@@ -4,3 +4,6 @@
 [submodule "libs/glfw"]
 	path = libs/glfw
 	url = https://github.com/printfdebugging/glfw
+[submodule "docs/gl"]
+	path = docs/gl
+	url = https://github.com/BSVino/docs.gl
