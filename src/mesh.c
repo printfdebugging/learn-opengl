@@ -50,16 +50,11 @@ void mesh_unbind() {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
-/*
-DESCRIPTION:
-    1. creates a vbo
-    2. binds it to GL_ARRAY_BUFFER
-    3. loads vertices into it as GL_STATIC_DRAW
-    4. sets GL_ARRAY_BUFFER data at index MESH_ATTRIBUTE_POSITION in vao
-    5. enables data at index MESH_ATTRIBUTE_POSITION in vao
-    6. unbinds vbo from GL_ARRAY_BUFFER
-*/
-static void __mesh_bind_vertex_data(struct mesh *mesh, const GLfloat *vertices, GLuint count, GLuint stride, GLenum draw_type) {
+GLboolean mesh_load_vertices(struct mesh *mesh, const GLfloat *vertices, GLuint count, GLuint stride, GLenum draw_type) {
+    if (!mesh_bind_vertex_array(mesh)) {
+        return GL_FALSE;
+    }
+
     GLuint vbo;
     glGenBuffers(1, &vbo);
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
@@ -71,22 +66,7 @@ static void __mesh_bind_vertex_data(struct mesh *mesh, const GLfloat *vertices, 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     mesh->vertex_array = vbo;
     mesh->vertices_count = count;
-}
 
-static void __mesh_bind_index_data(struct mesh *mesh, const GLuint *indices, GLuint count, GLenum draw_type) {
-    GLuint ebo;
-    glGenBuffers(1, &ebo);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, count, indices, draw_type);
-    mesh->indices_buffer = ebo;
-    mesh->indices_count = count;
-}
-
-GLboolean mesh_load_vertices(struct mesh *mesh, const GLfloat *vertices, GLuint count, GLuint stride, GLenum draw_type) {
-    if (!mesh_bind_vertex_array(mesh)) {
-        return GL_FALSE;
-    }
-    __mesh_bind_vertex_data(mesh, vertices, count, stride, draw_type);
     mesh_unbind();
     return GL_TRUE;
 }
@@ -95,7 +75,14 @@ GLboolean mesh_load_indices(struct mesh *mesh, const GLuint *indices, GLuint cou
     if (!mesh_bind_vertex_array(mesh)) {
         return GL_FALSE;
     }
-    __mesh_bind_index_data(mesh, indices, count, draw_type);
+
+    GLuint ebo;
+    glGenBuffers(1, &ebo);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, count, indices, draw_type);
+    mesh->indices_buffer = ebo;
+    mesh->indices_count = count;
+
     mesh_unbind();
     return GL_TRUE;
 }
