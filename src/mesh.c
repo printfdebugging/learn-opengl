@@ -19,7 +19,7 @@ struct mesh mesh_create() {
     return mesh;
 }
 
-GLboolean mesh_bind_vertex_array(struct mesh *mesh) {
+static GLboolean mesh_bind_vertex_array(struct mesh *mesh) {
     if (!mesh->vertex_array) {
         ERROR("attempt to bind invalid mesh->vertex_array=%i\n", mesh->vertex_array);
         return GL_FALSE;
@@ -28,7 +28,7 @@ GLboolean mesh_bind_vertex_array(struct mesh *mesh) {
     return GL_TRUE;
 }
 
-GLboolean mesh_bind_shader_program(struct mesh *mesh) {
+static GLboolean mesh_bind_shader_program(struct mesh *mesh) {
     if (!mesh->vertex_array || !mesh->shader_program.shader_program) {
         ERROR("attempt to bind invalid mesh->shader_program.program=%i\n", mesh->shader_program.shader_program);
         return GL_FALSE;

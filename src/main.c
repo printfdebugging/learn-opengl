@@ -9,14 +9,26 @@ const int WINDOW_HEIGHT = 600;
 const char *WINDOW_TITLE = "LearnOpenGL";
 
 /* clang-format off */
-GLfloat vertices[] = {
-     0.5f,  0.5f, 0.0f,
-    -0.5f,  0.5f, 0.0f,
-    -0.5f, -0.5f, 0.0f,
-     0.5f, -0.5f, 0.0f,
+GLfloat right_rect[] = {
+    0.75f, 0.75f, 0.0f,
+    0.75f, 0.25f, 0.0f,
+    0.25f, 0.25f, 0.0f,
+    0.25f, 0.75f, 0.0f,
 };
 
-GLuint indices[] = {
+GLfloat left_rect[] = {
+    -0.25f, 0.75f, 0.0f,
+    -0.75f, 0.75f, 0.0f,
+    -0.75f, 0.25f, 0.0f,
+    -0.25f, 0.25f, 0.0f,
+};
+
+GLuint right_rect_indices[] = {
+    0, 1, 2,
+    0, 2, 3,
+};
+
+GLuint left_rect_indices[] = {
     0, 1, 2,
     0, 2, 3,
 };
@@ -28,14 +40,25 @@ int main() {
         return EXIT_FAILURE;
     }
 
-    struct mesh mesh = mesh_create();
-    if (!mesh_load_vertices(&mesh, vertices, sizeof(vertices), 3 * sizeof(float), GL_STATIC_DRAW)) {
+    struct mesh right_rect_mesh = mesh_create();
+    if (!mesh_load_vertices(&right_rect_mesh, right_rect, sizeof(right_rect), 3 * sizeof(float), GL_STATIC_DRAW)) {
         return EXIT_FAILURE;
     }
-    if (!mesh_load_indices(&mesh, indices, sizeof(indices), GL_STATIC_DRAW)) {
+    if (!mesh_load_indices(&right_rect_mesh, right_rect_indices, sizeof(right_rect_indices), GL_STATIC_DRAW)) {
         return EXIT_FAILURE;
     }
-    if (!mesh_load_shader_program(&mesh, "shaders/shader.vert", "shaders/shader.frag")) {
+    if (!mesh_load_shader_program(&right_rect_mesh, "shaders/shader.vert", "shaders/shader.frag")) {
+        return EXIT_FAILURE;
+    }
+
+    struct mesh left_rect_mesh = mesh_create();
+    if (!mesh_load_vertices(&left_rect_mesh, left_rect, sizeof(left_rect), 3 * sizeof(float), GL_STATIC_DRAW)) {
+        return EXIT_FAILURE;
+    }
+    if (!mesh_load_indices(&left_rect_mesh, left_rect_indices, sizeof(left_rect_indices), GL_STATIC_DRAW)) {
+        return EXIT_FAILURE;
+    }
+    if (!mesh_load_shader_program(&left_rect_mesh, "shaders/shader.vert", "shaders/shader.frag")) {
         return EXIT_FAILURE;
     }
 
@@ -45,12 +68,15 @@ int main() {
         window_process_input(window);
 
         renderer_prepare();
-        renderer_render(mesh, INDICES_WIREFRAME);
+
+        renderer_render(right_rect_mesh, INDICES_WIREFRAME);
+        renderer_render(left_rect_mesh, INDICES_WIREFRAME);
 
         window_refresh(window);
     }
 
-    mesh_destroy(mesh);
+    mesh_destroy(right_rect_mesh);
+    mesh_destroy(left_rect_mesh);
     window_destroy(window);
 
     return EXIT_SUCCESS;
