@@ -21,10 +21,10 @@ void renderer_render(struct mesh mesh, enum render_type render_type) {
 
     switch (render_type) {
         case VERTICES:
-            glDrawArrays(GL_TRIANGLES, 0, mesh.vertices_count);
+            glDrawArrays(GL_TRIANGLES, 0, mesh.vbo_size);
             break;
         case INDICES:
-            glDrawElements(GL_TRIANGLES, mesh.indices_count, GL_UNSIGNED_INT, 0);
+            glDrawElements(GL_TRIANGLES, mesh.ebo_size, GL_UNSIGNED_INT, 0);
             break;
         case VERTICES_WIREFRAME:
             glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);

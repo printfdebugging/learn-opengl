@@ -4,32 +4,32 @@
 
 struct mesh mesh_create() {
     struct mesh mesh = {
-        .vertex_array = 0,
-        .vertices_buffer = 0,
-        .vertices_count = 0,
-        .indices_buffer = 0,
-        .indices_count = 0,
+        .vao = 0,
+        .vbo = 0,
+        .vbo_size = 0,
+        .ebo = 0,
+        .ebo_size = 0,
         .shader_program = {0},
     };
 
     GLuint vao;
     glGenVertexArrays(1, &vao);
-    mesh.vertex_array = vao;
+    mesh.vao = vao;
 
     return mesh;
 }
 
 static GLboolean mesh_bind_vertex_array(struct mesh *mesh) {
-    if (!mesh->vertex_array) {
-        ERROR("attempt to bind invalid mesh->vertex_array=%i\n", mesh->vertex_array);
+    if (!mesh->vao) {
+        ERROR("attempt to bind invalid mesh->vertex_array=%i\n", mesh->vao);
         return GL_FALSE;
     }
-    glBindVertexArray(mesh->vertex_array);
+    glBindVertexArray(mesh->vao);
     return GL_TRUE;
 }
 
 static GLboolean mesh_bind_shader_program(struct mesh *mesh) {
-    if (!mesh->vertex_array || !mesh->shader_program.shader_program) {
+    if (!mesh->vao || !mesh->shader_program.shader_program) {
         ERROR("attempt to bind invalid mesh->shader_program.program=%i\n", mesh->shader_program.shader_program);
         return GL_FALSE;
     }
@@ -50,7 +50,7 @@ void mesh_unbind() {
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
-GLboolean mesh_load_vertices(struct mesh *mesh, const GLfloat *vertices, GLuint count, GLuint stride, GLenum draw_type) {
+GLboolean mesh_load_vertices(struct mesh *mesh, const GLfloat *vertices, GLuint size, GLuint stride, GLenum draw_type) {
     if (!mesh_bind_vertex_array(mesh)) {
         return GL_FALSE;
     }
@@ -58,20 +58,20 @@ GLboolean mesh_load_vertices(struct mesh *mesh, const GLfloat *vertices, GLuint 
     GLuint vbo;
     glGenBuffers(1, &vbo);
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, count, vertices, draw_type);
+    glBufferData(GL_ARRAY_BUFFER, size, vertices, draw_type);
 
     glVertexAttribPointer(MESH_ATTRIBUTE_POSITION, 3, GL_FLOAT, GL_FALSE, stride, NULL);
     glEnableVertexAttribArray(MESH_ATTRIBUTE_POSITION);
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
-    mesh->vertex_array = vbo;
-    mesh->vertices_count = count;
+    mesh->vbo = vbo;
+    mesh->vbo_size = size;
 
     mesh_unbind();
     return GL_TRUE;
 }
 
-GLboolean mesh_load_indices(struct mesh *mesh, const GLuint *indices, GLuint count, GLenum draw_type) {
+GLboolean mesh_load_indices(struct mesh *mesh, const GLuint *indices, GLuint size, GLenum draw_type) {
     if (!mesh_bind_vertex_array(mesh)) {
         return GL_FALSE;
     }
@@ -79,9 +79,9 @@ GLboolean mesh_load_indices(struct mesh *mesh, const GLuint *indices, GLuint cou
     GLuint ebo;
     glGenBuffers(1, &ebo);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, count, indices, draw_type);
-    mesh->indices_buffer = ebo;
-    mesh->indices_count = count;
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, indices, draw_type);
+    mesh->ebo = ebo;
+    mesh->ebo_size = size;
 
     mesh_unbind();
     return GL_TRUE;
@@ -97,8 +97,8 @@ GLboolean mesh_load_shader_program(struct mesh *mesh, const char *vertex_shader_
 }
 
 void mesh_destroy(struct mesh mesh) {
-    glDeleteBuffers(1, &mesh.vertices_buffer);
-    glDeleteBuffers(1, &mesh.indices_buffer);
-    glDeleteVertexArrays(1, &mesh.vertex_array);
+    glDeleteBuffers(1, &mesh.vbo);
+    glDeleteBuffers(1, &mesh.ebo);
+    glDeleteVertexArrays(1, &mesh.vao);
     shader_program_destroy(mesh.shader_program);
 }

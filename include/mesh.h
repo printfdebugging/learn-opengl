@@ -9,13 +9,13 @@ enum mesh_attribute {
 };
 
 struct mesh {
-    GLuint vertex_array;
+    GLuint vao;
 
-    GLuint vertices_buffer;
-    GLuint vertices_count;
+    GLuint vbo;
+    GLuint vbo_size;
 
-    GLuint indices_buffer;
-    GLuint indices_count;
+    GLuint ebo;
+    GLuint ebo_size;
 
     struct shader_program shader_program;
 };
