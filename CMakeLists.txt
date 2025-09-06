@@ -8,7 +8,7 @@ ADD_SUBDIRECTORY(libs/glad)
 ADD_SUBDIRECTORY(libs/glfw)
 
 ADD_EXECUTABLE(
-    executable
+    learngl
     src/main.c
     src/shader.c
     src/window.c
@@ -38,8 +38,8 @@ TARGET_COMPILE_DEFINITIONS(executable PRIVATE
 )
 
 add_custom_target(run
-    COMMAND executable
+    COMMAND learngl
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-    DEPENDS executable
-    COMMENT "Running executable from root directory"
+    DEPENDS learngl
+    COMMENT "Running learngl from root directory"
 )
