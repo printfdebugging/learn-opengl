@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 4.0)
-project(executable)
+project(learngl)
 
 set(C_STANDARD 11)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
@@ -16,7 +16,7 @@ ADD_EXECUTABLE(
     src/mesh.c
 )
 
-TARGET_COMPILE_OPTIONS(executable PRIVATE
+TARGET_COMPILE_OPTIONS(learngl PRIVATE
     -std=c11
     -g
     -Wall
@@ -24,16 +24,16 @@ TARGET_COMPILE_OPTIONS(executable PRIVATE
     -static
 )
 
-TARGET_LINK_LIBRARIES(executable PRIVATE
+TARGET_LINK_LIBRARIES(learngl PRIVATE
     glad
     glfw
 )
 
-TARGET_INCLUDE_DIRECTORIES(executable PRIVATE
+TARGET_INCLUDE_DIRECTORIES(learngl PRIVATE
     include
 )
 
-TARGET_COMPILE_DEFINITIONS(executable PRIVATE
+TARGET_COMPILE_DEFINITIONS(learngl PRIVATE
     GLFW_INCLUDE_NONE
 )
 
