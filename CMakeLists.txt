@@ -10,10 +10,6 @@ ADD_SUBDIRECTORY(libs/glfw)
 ADD_EXECUTABLE(
     learngl
     src/main.c
-    src/shader.c
-    src/window.c
-    src/renderer.c
-    src/mesh.c
 )
 
 TARGET_COMPILE_OPTIONS(learngl PRIVATE
@@ -27,10 +23,6 @@ TARGET_COMPILE_OPTIONS(learngl PRIVATE
 TARGET_LINK_LIBRARIES(learngl PRIVATE
     glad
     glfw
-)
-
-TARGET_INCLUDE_DIRECTORIES(learngl PRIVATE
-    include
 )
 
 TARGET_COMPILE_DEFINITIONS(learngl PRIVATE
