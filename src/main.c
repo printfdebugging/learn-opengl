@@ -157,9 +157,15 @@ int main() {
 
     /* clang-format off */
     GLfloat vertices[] = {
+         0.5f,  0.5f, 0.0f,
          0.5f, -0.5f, 0.0f,
         -0.5f, -0.5f, 0.0f,
-         0.0f,  0.5f, 0.0f,
+        -0.5f,  0.5f, 0.0f,
+    };
+
+    GLuint indices[] = {
+        0, 1, 2,
+        0, 2, 3,
     };
     /* clang-format on */
 
@@ -168,6 +174,12 @@ int main() {
     glGenBuffers(1, &vbo);
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+    /* create an index buffer */
+    GLuint ebo;
+    glGenBuffers(1, &ebo);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
     /* bind the vbo to a slot on the vao */
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), NULL);
@@ -182,7 +194,7 @@ int main() {
 
         /* renderer */
         glClear(GL_COLOR_BUFFER_BIT);
-        glDrawArrays(GL_TRIANGLES, 0, sizeof(vertices));
+        glDrawElements(GL_TRIANGLES, sizeof(indices), GL_UNSIGNED_INT, NULL);
         /* renderer */
 
         glfwSwapBuffers(window);
