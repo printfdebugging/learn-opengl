@@ -5,7 +5,7 @@ AlignConsecutiveDeclarations: false
 AlignConsecutiveMacros: true
 AllowAllParametersOfDeclarationOnNextLine: true
 AllowShortFunctionsOnASingleLine: false
-AllowShortIfStatementsOnASingleLine: false
+AllowShortIfStatementsOnASingleLine: true
 AlwaysBreakAfterDefinitionReturnType: None
 AlwaysBreakAfterReturnType: None
 AlwaysBreakTemplateDeclarations: Yes
