@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 
 #define ERROR(message, ...)                                \
     fprintf(stderr, "%s:%i: error: ", __FILE__, __LINE__); \
@@ -191,6 +192,18 @@ int main() {
         glfwPollEvents();
         process_input(window);
         /* event */
+
+        {
+            float time_value = glfwGetTime();
+            float green_value = (sin(time_value) / 2.0f) + 0.5f;
+            int background_color_location = glGetUniformLocation(shader_program, "background_color");
+            if (background_color_location == -1) {
+                ERROR("no such uniform variable exists in the shader program\n");
+                break;
+            }
+            glUseProgram(shader_program);
+            glUniform4f(background_color_location, 0.0f, green_value, 0.1f, 1.0f);
+        }
 
         /* renderer */
         glClear(GL_COLOR_BUFFER_BIT);
