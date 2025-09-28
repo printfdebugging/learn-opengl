@@ -158,15 +158,14 @@ int main() {
 
     /* clang-format off */
     GLfloat vertices[] = {
-         0.5f,  0.5f, 0.0f,
-         0.5f, -0.5f, 0.0f,
-        -0.5f, -0.5f, 0.0f,
-        -0.5f,  0.5f, 0.0f,
+         // vertices        // colors
+         0.0f,  0.5f, 0.0f, 1.0f, 0.0f, 0.0f,
+         0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f,
+        -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 1.0f,
     };
 
     GLuint indices[] = {
         0, 1, 2,
-        0, 2, 3,
     };
     /* clang-format on */
 
@@ -183,8 +182,10 @@ int main() {
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
     /* bind the vbo to a slot on the vao */
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), NULL);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *) 0);
     glEnableVertexAttribArray(0);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *) (3 * sizeof(float)));
+    glEnableVertexAttribArray(1);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
     while (!glfwWindowShouldClose(window)) {
@@ -192,17 +193,16 @@ int main() {
         glfwPollEvents();
         process_input(window);
         /* event */
-
         {
-            float time_value = glfwGetTime();
-            float green_value = (sin(time_value) / 2.0f) + 0.5f;
-            int background_color_location = glGetUniformLocation(shader_program, "background_color");
-            if (background_color_location == -1) {
-                ERROR("no such uniform variable exists in the shader program\n");
+            float time = glfwGetTime();
+            float normalized = sin(time);
+            float offset_location = glGetUniformLocation(shader_program, "offset_x");
+            if (offset_location == -1) {
+                ERROR("failed to fetch offset_x");
                 break;
             }
             glUseProgram(shader_program);
-            glUniform4f(background_color_location, 0.0f, green_value, 0.1f, 1.0f);
+            glUniform1f(offset_location, normalized);
         }
 
         /* renderer */
