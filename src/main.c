@@ -193,18 +193,6 @@ int main() {
         glfwPollEvents();
         process_input(window);
         /* event */
-        {
-            float time = glfwGetTime();
-            float normalized = sin(time);
-            float offset_location = glGetUniformLocation(shader_program, "offset_x");
-            if (offset_location == -1) {
-                ERROR("failed to fetch offset_x");
-                break;
-            }
-            glUseProgram(shader_program);
-            glUniform1f(offset_location, normalized);
-        }
-
         /* renderer */
         glClear(GL_COLOR_BUFFER_BIT);
         glDrawElements(GL_TRIANGLES, sizeof(indices), GL_UNSIGNED_INT, NULL);
