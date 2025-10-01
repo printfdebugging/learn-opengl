@@ -84,7 +84,7 @@ int main() {
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 
     /* create a vertex shader */
-    const GLchar *vertex_shader_source = read_shader_file("shaders/shader.vert");
+    const GLchar *vertex_shader_source = read_shader_file("assets/shaders/shader.vert");
     if (!vertex_shader_source) return EXIT_FAILURE;
 
     GLuint vertex_shader = glCreateShader(GL_VERTEX_SHADER);
@@ -105,7 +105,7 @@ int main() {
     }
 
     /* create a fragment shader */
-    const GLchar *fragment_shader_source = read_shader_file("shaders/shader.frag");
+    const GLchar *fragment_shader_source = read_shader_file("assets/shaders/shader.frag");
     if (!fragment_shader_source) return EXIT_FAILURE;
 
     GLuint fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);

@@ -4,9 +4,6 @@
 [submodule "libs/glfw"]
 	path = libs/glfw
 	url = https://github.com/glfw/glfw
-[submodule "docs/gl"]
-	path = docs/gl
-	url = https://github.com/BSVino/docs.gl
 [submodule "libs/stb"]
 	path = libs/stb
 	url = https://github.com/nothings/stb
