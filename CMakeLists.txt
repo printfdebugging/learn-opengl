@@ -10,6 +10,7 @@ ADD_SUBDIRECTORY(libs/glfw)
 ADD_EXECUTABLE(
     learngl
     src/main.c
+    src/stb.c
 )
 
 TARGET_COMPILE_OPTIONS(learngl PRIVATE
@@ -27,6 +28,10 @@ TARGET_LINK_LIBRARIES(learngl PRIVATE
 
 TARGET_COMPILE_DEFINITIONS(learngl PRIVATE
     GLFW_INCLUDE_NONE
+)
+
+TARGET_INCLUDE_DIRECTORIES(learngl PRIVATE
+    ${CMAKE_SOURCE_DIR}/libs/stb
 )
 
 add_custom_target(run
